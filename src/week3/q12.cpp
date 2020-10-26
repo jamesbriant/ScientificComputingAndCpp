@@ -7,12 +7,14 @@ int main(int argc, char* argv[])
     int* p_i;
     p_i = &i;
 
-    std::cout << *p_i * 10;
+    *p_i *= 10;
+    std::cout << "i = " << *p_i << std::endl;
 
     int* p_j;
     p_j = new int;
 
-    p_j = p_i;
+    *p_j = i;
+    std::cout << "i = " << *p_j << std::endl;
 
     delete p_j;
 
