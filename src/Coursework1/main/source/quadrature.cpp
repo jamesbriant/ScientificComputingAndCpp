@@ -26,8 +26,10 @@ double** GenerateSimpsonsMesh(int n, double a, double b)
     // Fill in the middle of the matrix
     for(int i=1; i<N-1; i++)
     {
+        // enter the x values
         p_Mesh[i][0] = a + i*h;
         
+        // enter the weights
         if(i % 2 == 1)
         {
             p_Mesh[i][1] = w3; // =4h/3
