@@ -183,6 +183,37 @@ double* Subtract(int n, double* a, double* b)
     return diff;
 }
 
+double* ScaleVector(int n, double a, double* pVec)
+// Returns a*pVec
+{
+    double* p_output;
+    p_output = new double[n];
+    for(int i=0; i<n; i++)
+    {
+        p_output[i] = a*pVec[i];
+    }
+
+    return p_output;
+}
+
+double InnerProduct(int n, double* pVec1, double* pVec2)
+// Returns the inner product of the vectors pVec1 and pVec2
+{
+    double sum = 0;
+    for(int i=0; i<n; i++)
+    {
+        sum += pVec1[i]*pVec2[i];
+    }
+
+    return sum;
+}
+
+double Norm2(int n, double* pVec)
+// Returns the 2-norm of pVec
+{
+    return sqrt(InnerProduct(n, pVec, pVec));
+}
+
 void DeallocateMatrix(int nrows, double** pMatrix)
 // Deletes the matrix provided
 {
