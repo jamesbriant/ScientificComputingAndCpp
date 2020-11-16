@@ -92,10 +92,11 @@ double* Multiply(int nrows, int ncols, double** pM, double* px)
 {
     double* p_Mx;
     p_Mx = new double[nrows];
+    double sum;
 
     for(int i=0; i<nrows; i++)
     {
-        double sum = 0;
+        sum = 0;
 
         for(int j=0; j<ncols; j++)
         {
