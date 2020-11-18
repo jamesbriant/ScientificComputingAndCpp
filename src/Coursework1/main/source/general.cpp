@@ -76,6 +76,16 @@ void PopulateMatrix(int nrows, int ncols, double** pMatrix)
     }
 }
 
+void PopulateVector(int nrows, double* pVector)
+// Populates the vector with random values in (0,1)
+// Requires a predefined vector as an input
+{
+    for(int i=0; i<nrows; i++)
+    {
+        pVector[i] = ((double) rand() / (RAND_MAX));
+    }
+}
+
 void PopulateVector0(int nrows, double* pVector)
 // Populates the vector with zeros
 // Requires a predefined vector as an input

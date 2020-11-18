@@ -7,6 +7,7 @@ void PrintMatrix(int p, int q, double** pMatrix);
 double** AllocateMatrix(int nrows, int ncols);
 double** AllocateTridiagonalMatrix(int nrows);
 void PopulateMatrix(int nrows, int ncols, double** pMatrix);
+void PopulateVector(int nrows, double* pVector);
 void PopulateVector0(int nrows, double* pVector);
 double* Multiply(int nrows, int ncols, double** pM, double* px);
 double* Multiply(int nrows, int ncols, double* px, double** pM);
