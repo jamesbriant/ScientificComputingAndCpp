@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 #include "../include/linear_algebra.hpp"
 #include "../include/general.hpp"
 
@@ -34,6 +35,7 @@ double* ApplyBiGCstab(int n, double** pA, double* px0, double* pb, double tol,
     // set up variables that do not require instantiating
     double beta;
     double rho1;
+    double norm;
     double* p_h;
     double* p_s;
     double* p_t;
@@ -41,11 +43,12 @@ double* ApplyBiGCstab(int n, double** pA, double* px0, double* pb, double tol,
     p_s = new double[n];
     p_t = new double[n];
 
-    int counter = 0;
+    int counter = 1;
     
     // Algorithm implementation
     do
     {
+        // Steps 1-6
         rho1 = InnerProduct(n, p_rhat, p_r);
         beta = (rho1*alpha)/(rho0*omega);
         p_p = CalculateP(n, p_r, p_p, p_nu, beta, omega);
@@ -53,23 +56,35 @@ double* ApplyBiGCstab(int n, double** pA, double* px0, double* pb, double tol,
         alpha = rho1/InnerProduct(n, p_rhat, p_nu);
         p_h = Add(n, p_x, ScaleVector(n, alpha, p_p));
 
+        // Step 7
+        //std::cout << counter-1 << ".5" << std::endl;
         if(Norm2(n, Subtract(n, pb, MultiplyTridiagonalMatrix(n, pA, p_h))) < tol)
         {
-            CopyVector(n, p_h, p_x);
+            std::cout << "exit here" << std::endl;
+            p_x = p_h;
+            //CopyVector(n, p_h, p_x);
             break;
         }
 
+        // Steps 8-12
         p_s = Subtract(n, p_r, ScaleVector(n, alpha, p_nu));
         p_t = MultiplyTridiagonalMatrix(n, pA, p_s);
         omega = InnerProduct(n, p_t, p_s)/InnerProduct(n, p_t, p_t);
         p_x = Add(n, p_h, ScaleVector(n, omega, p_s));
         p_r = Subtract(n, p_s, ScaleVector(n, omega, p_t));
 
+        norm = Norm2(n, p_r);
+        std::cout <<  counter << ", norm = " << norm << std::endl;
+
+        rho0 = rho1;
+
         counter++;
 
-    } while (Norm2(n, p_r) < tol && counter < maxIter);
+    } while (norm > tol && counter < maxIter);
 
     delete[] p_r, p_rhat, p_p, p_nu, p_h, p_s, p_t;
+
+    PrintVector(n, p_x);
 
     return p_x;
 }
