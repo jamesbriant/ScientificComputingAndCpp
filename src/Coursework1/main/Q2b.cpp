@@ -1,39 +1,44 @@
 #include <iostream>
-#include "include/general.hpp"
-#include "include/linear_algebra.hpp"
-
-// I compile this by using 
-// `g++ Q2b.cpp source/general.cpp source/linear_algebra.cpp -o Q2b.exe`
+#include <cmath>
+#include "general.hpp"
+#include "linear_algebra.hpp"
 
 void PopulateA(int nrows, double** pA);
 
 int main(int argc, char* argv[])
 {
-    int n = atoi(argv[1]);
+    //int n = atoi(argv[1]);
     double tol = 1e-9;
     int maxIter = 1000;
 
-    double** A = AllocateTridiagonalMatrix(n);
-    PopulateA(n, A);
+    for(int i=1; i<=5; i++)
+    {
+        int n = pow(10, i);
 
-    double* x;
-    double* x0;
-    double* b;
-    x = new double[n];
-    x0 = new double[n];
-    b = new double[n];
-    PopulateVector(n, x);
-    PopulateVector(n, x0);
-    b = MultiplyTridiagonalMatrix(n, A, x);
-    /*b[0] = 0.05;
-    b[1] = 0.76;
-    b[2] = 0.62;
-    b[3] = 0.88;*/
+        double** A;
+        A = AllocateTridiagonalMatrix(n);
+        PopulateA(n, A);
 
-    ApplyBiGCstab(n, A, x0, b, tol, maxIter);
+        double* x;
+        double* x0;
+        double* xEstimate;
+        double* b;
+        x = new double[n];
+        x0 = new double[n];
+        xEstimate = new double[n];
+        b = new double[n];
+        PopulateVector(n, x);
+        PopulateVector(n, x0);
+        MultiplyTridiagonalMatrix(n, b, A, x);
 
-    DeallocateMatrix(n, A);
-    delete[] x, x0, b;
+        ApplyBiGCstab(n, xEstimate, A, x0, b, tol, maxIter);
+        //PrintVector(n, xEstimate);
+
+        DeallocateMatrix(n, A);
+        delete[] x, x0, xEstimate, b;
+    }
+
+    //std::cin.get();
 
     return 0;
 }

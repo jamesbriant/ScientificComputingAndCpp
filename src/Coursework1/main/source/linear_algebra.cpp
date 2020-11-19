@@ -1,10 +1,10 @@
 #include <cmath>
 #include <iostream>
-#include "../include/linear_algebra.hpp"
-#include "../include/general.hpp"
+#include "linear_algebra.hpp"
+#include "general.hpp"
 
-double* ApplyBiGCstab(int n, double** pA, double* px0, double* pb, double tol,
-                      int maxIter)
+void ApplyBiGCstab(int n, double* pxEstimate, double** pA, double* px0, 
+                        double* pb, double tol, int maxIter)
 // Returns solution to Ax=b where A is a known tridiagonal matrix and b is known
 // Uses the biconjugate gradient stabilised method.
 {
@@ -16,7 +16,7 @@ double* ApplyBiGCstab(int n, double** pA, double* px0, double* pb, double tol,
     p_rhat = new double[n];
     p_r = new double[n];
     CopyVector(n, px0, p_x);
-    CopyVector(n, Subtract(n, pb, MultiplyTridiagonalMatrix(n, pA, px0)), p_r);
+    CalculateR0(n, p_r, pb, pA, px0);
     CopyVector(n, p_r, p_rhat);
 
     // Set up p and nu
@@ -51,28 +51,26 @@ double* ApplyBiGCstab(int n, double** pA, double* px0, double* pb, double tol,
         // Steps 1-6
         rho1 = InnerProduct(n, p_rhat, p_r);
         beta = (rho1*alpha)/(rho0*omega);
-        p_p = CalculateP(n, p_r, p_p, p_nu, beta, omega);
-        p_nu = MultiplyTridiagonalMatrix(n, pA, p_p);
+        CalculateP(n, p_p, p_r, p_nu, beta, omega);
+        MultiplyTridiagonalMatrix(n, p_nu, pA, p_p);
         alpha = rho1/InnerProduct(n, p_rhat, p_nu);
-        p_h = Add(n, p_x, ScaleVector(n, alpha, p_p));
+        CalculateH(n, p_h, p_x, alpha, p_p);
 
         // Step 7
-        //std::cout << counter-1 << ".5" << std::endl;
-        if(Norm2(n, Subtract(n, pb, MultiplyTridiagonalMatrix(n, pA, p_h))) < tol)
+        if(CheckEarlyBreak(n, pb, pA, p_h, tol))
         {
             std::cout << "exit here" << std::endl;
-            p_x = p_h;
-            //CopyVector(n, p_h, p_x);
+            CopyVector(n, p_h, p_x);
             break;
         }
 
         // Steps 8-12
-        p_s = Subtract(n, p_r, ScaleVector(n, alpha, p_nu));
-        p_t = MultiplyTridiagonalMatrix(n, pA, p_s);
+        CalculateS(n, p_s, p_r, alpha, p_nu);
+        MultiplyTridiagonalMatrix(n, p_t, pA, p_s);
         omega = InnerProduct(n, p_t, p_s)/InnerProduct(n, p_t, p_t);
-        p_x = Add(n, p_h, ScaleVector(n, omega, p_s));
-        p_r = Subtract(n, p_s, ScaleVector(n, omega, p_t));
-
+        CalculateX(n, p_x, p_h, omega, p_s);
+        CalculateR(n, p_r, p_s, omega, p_t);
+        
         norm = Norm2(n, p_r);
         std::cout <<  counter << ", norm = " << norm << std::endl;
 
@@ -82,25 +80,97 @@ double* ApplyBiGCstab(int n, double** pA, double* px0, double* pb, double tol,
 
     } while (norm > tol && counter < maxIter);
 
-    delete[] p_r, p_rhat, p_p, p_nu, p_h, p_s, p_t;
+    CopyVector(n, p_x, pxEstimate);
 
-    PrintVector(n, p_x);
-
-    return p_x;
+    delete[] p_r, p_rhat, p_p, p_nu, p_h, p_s, p_t, p_x;
 }
 
-double* CalculateP(int n, double* pR, double* pP, double* pNu, double beta, 
-                    double omega)
+void CalculateR0(int n, double* pr0, double* pb, double** pA, double* px0)
 {
     double* p_a;
     p_a = new double[n];
-    CopyVector(n, ScaleVector(n, omega, pNu), p_a);
-    p_a = Subtract(n, pP, p_a);
-    p_a = ScaleVector(n, beta, p_a);
-    p_a = Add(n, pR, p_a);
 
-    return p_a;
+    MultiplyTridiagonalMatrix(n, p_a, pA, px0);
+    Subtract(n, pr0, pb, p_a);
+
+    delete[] p_a;
 }
 
+bool CheckEarlyBreak(int n, double* pb, double** pA, double* ph, double tol)
+{
+    double* p_a;
+    p_a = new double[n];
 
+    MultiplyTridiagonalMatrix(n, p_a, pA, ph);
+    Subtract(n, p_a, pb, p_a);
+    double difference = Norm2(n, p_a);
 
+    delete[] p_a;
+
+    if(difference > tol)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+void CalculateP(int n, double* pp, double* pr, double* pNu, double beta, 
+                double omega)
+{
+    double* p_a;
+    p_a = new double[n];
+
+    ScaleVector(n, p_a, omega, pNu);
+    Subtract(n, p_a, pp, p_a);
+    ScaleVector(n, p_a, beta, p_a);
+    Add(n, pp, pr, p_a);
+
+    delete[] p_a;
+}
+
+void CalculateH(int n, double* ph, double* px, double alpha, double* pp)
+{
+    double* p_a;
+    p_a = new double[n];
+
+    ScaleVector(n, p_a, alpha, pp);
+    Add(n, ph, px, p_a);
+
+    delete[] p_a;
+}
+
+void CalculateS(int n, double* ps, double* pr, double alpha, double* pNu)
+{
+    double* p_a;
+    p_a = new double[n];
+
+    ScaleVector(n, p_a, alpha, pNu);
+    Subtract(n, ps, pr, p_a);
+
+    delete[] p_a;
+}
+
+void CalculateX(int n, double* px, double* ph, double omega, double* ps)
+{
+    double* p_a;
+    p_a = new double[n];
+
+    ScaleVector(n, p_a, omega, ps);
+    Add(n, px, ph, p_a);
+
+    delete[] p_a;
+}
+
+void CalculateR(int n, double* pr, double* ps, double omega, double* pt)
+{
+    double* p_a;
+    p_a = new double[n];
+
+    ScaleVector(n, p_a, omega, pt);
+    Subtract(n, pr, ps, p_a);
+
+    delete[] p_a;
+}
