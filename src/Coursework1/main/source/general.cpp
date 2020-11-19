@@ -96,12 +96,10 @@ void PopulateVector0(int nrows, double* pVector)
     }
 }
 
-double* Multiply(int nrows, int ncols, double** pM, double* px)
+void Multiply(int nrows, double* pMx, int ncols, double** pM, double* px)
 // Overloaded function
 // returns the matrix product of a matrix M and a vector x, Mx
 {
-    double* p_Mx;
-    p_Mx = new double[nrows];
     double sum;
 
     for(int i=0; i<nrows; i++)
@@ -113,98 +111,79 @@ double* Multiply(int nrows, int ncols, double** pM, double* px)
             sum += pM[i][j] * px[j];
         }
 
-        p_Mx[i] = sum;
+        pMx[i] = sum;
     }
-
-    return p_Mx;
 }
 
-double* Multiply(int nrows, int ncols, double* px, double** pM)
+void Multiply(int nrows, double* pxM, int ncols, double* px, double** pM)
 // Overloaded function
 // returns the matrix product of a vector x and a matrix M, xM
 {
-    double* p_xM;
-    p_xM = new double[ncols];
+    double sum;
 
     for(int i=0; i<ncols; i++)
     {
-        double sum = 0;
+        sum = 0;
 
         for(int j=0; j<nrows; j++)
         {
             sum += pM[i][j] * px[j];
         }
 
-        p_xM[i] = sum;
+        pxM[i] = sum;
     }
-
-    return p_xM;
 }
 
-double* MultiplyTridiagonalMatrix(int nrows, double** pM, double* px)
-// returns the matrix product of tridiagonal matrix M and a vector x, Mx
+void MultiplyTridiagonalMatrix(int nrows, double* pMx, double** pM, double* px)
+// Calculates the matrix product of tridiagonal matrix M and a vector x,
+// Saves result to pMx
 {
-    // instantiate output array
-    double* p_Mx;
-    p_Mx = new double[nrows];
-
     // calculate end points of output array 
-    p_Mx[0] = pM[0][0]*px[0] + pM[0][1]*px[1];
-    p_Mx[nrows-1] = pM[nrows-1][0]*px[nrows-2] + pM[nrows-1][1]*px[nrows-1];
+    pMx[0] = pM[0][0]*px[0] + pM[0][1]*px[1];
+    pMx[nrows-1] = pM[nrows-1][0]*px[nrows-2] + pM[nrows-1][1]*px[nrows-1];
+
+    double sum;
 
     // calculate middle points of output array
     for(int i=1; i<nrows-1; i++)
     {
-        double sum = 0;
+        sum = 0;
 
         for(int j=0; j<3; j++)
         {
             sum += pM[i][j] * px[i-1+j]; //adjusts for 0's in the tridiagonal
         }
 
-        p_Mx[i] = sum;
+        pMx[i] = sum;
     }
-
-    return p_Mx;
 }
 
-double* Add(int n, double* a, double* b)
+void Add(int n, double* pSum, double* pa, double* pb)
 // Adds vector b to vector a
 {
-    double* sum;
-    sum = new double[n];
     for(int i=0; i<n; i++)
     {
-        sum[i] = a[i] + b[i];
+        pSum[i] = pa[i] + pb[i];
     }
-
-    return sum;
 }
 
-double* Subtract(int n, double* a, double* b)
+void Subtract(int n, double* pDiff, double* pa, double* pb)
 // Subtracts vector b from vector a
+// diff = a-b
 {
-    double* diff;
-    diff = new double[n];
     for(int i=0; i<n; i++)
     {
-        diff[i] = a[i] - b[i];
+        pDiff[i] = pa[i] - pb[i];
     }
-
-    return diff;
 }
 
-double* ScaleVector(int n, double a, double* pVec)
+void ScaleVector(int n, double* pScaledVec, double a, double* pVec)
 // Returns a*pVec
 {
-    double* p_output;
-    p_output = new double[n];
     for(int i=0; i<n; i++)
     {
-        p_output[i] = a*pVec[i];
+        pScaledVec[i] = a*pVec[i];
     }
-
-    return p_output;
 }
 
 double InnerProduct(int n, double* pVec1, double* pVec2)
