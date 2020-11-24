@@ -7,18 +7,23 @@ void PopulateA(int nrows, double** pA);
 
 int main(int argc, char* argv[])
 {
-    //int n = atoi(argv[1]);
+    // Define the stopping parameters
     double tol = 1e-9;
     int maxIter = 1000;
 
+    // loop over each of n=10,100,1000,10000,100000
     for(int i=1; i<=5; i++)
     {
+        // define n
         int n = pow(10, i);
+        std::cout << "n = " << n << std::endl;
 
+        // allocate the tridiagonal matrix
         double** A;
         A = AllocateTridiagonalMatrix(n);
         PopulateA(n, A);
 
+        // define the variables required for the BiGCstab algorithm
         double* x;
         double* x0;
         double* xEstimate;
@@ -32,13 +37,18 @@ int main(int argc, char* argv[])
         MultiplyTridiagonalMatrix(n, b, A, x);
 
         ApplyBiGCstab(n, xEstimate, A, x0, b, tol, maxIter);
-        //PrintVector(n, xEstimate);
+
+        // Print the error
+        double error;
+        double* diff;
+        diff = new double[n];
+        Subtract(n, diff, x, xEstimate);
+        error = Norm2(n, diff);
+        std::cout << "Error = " << error << std::endl << std::endl;
 
         DeallocateMatrix(n, A);
-        delete[] x, x0, xEstimate, b;
+        delete[] x, x0, xEstimate, b, diff;
     }
-
-    //std::cin.get();
 
     return 0;
 }
