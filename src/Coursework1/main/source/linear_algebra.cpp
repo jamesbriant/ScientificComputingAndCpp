@@ -4,7 +4,7 @@
 #include "general.hpp"
 
 void ApplyBiGCstab(int n, double* pxEstimate, double** pA, double* px0, 
-                        double* pb, double tol, int maxIter)
+        double* pb, double tol, int maxIter)
 // Returns solution to Ax=b where A is a known tridiagonal matrix and b is known
 // Uses the biconjugate gradient stabilised method.
 {
@@ -59,7 +59,7 @@ void ApplyBiGCstab(int n, double* pxEstimate, double** pA, double* px0,
         // Step 7
         if(CheckEarlyBreak(n, pb, pA, p_h, tol))
         {
-            std::cout << "exit here" << std::endl;
+            //std::cout << "break early" << std::endl;
             CopyVector(n, p_h, p_x);
             break;
         }
@@ -70,12 +70,14 @@ void ApplyBiGCstab(int n, double* pxEstimate, double** pA, double* px0,
         omega = InnerProduct(n, p_t, p_s)/InnerProduct(n, p_t, p_t);
         CalculateX(n, p_x, p_h, omega, p_s);
         CalculateR(n, p_r, p_s, omega, p_t);
-        
+
+        // Output the error
         norm = Norm2(n, p_r);
-        std::cout <<  counter << ", norm = " << norm << std::endl;
+        std::cout << "iteration: " << counter;
+        std::cout << "; residual error (2-norm) = " << norm << std::endl;
 
+        // prepare for next iteration
         rho0 = rho1;
-
         counter++;
 
     } while (norm > tol && counter < maxIter);
@@ -86,6 +88,7 @@ void ApplyBiGCstab(int n, double* pxEstimate, double** pA, double* px0,
 }
 
 void CalculateR0(int n, double* pr0, double* pb, double** pA, double* px0)
+// r0 = b - Ax0
 {
     double* p_a;
     p_a = new double[n];
@@ -97,6 +100,7 @@ void CalculateR0(int n, double* pr0, double* pb, double** pA, double* px0)
 }
 
 bool CheckEarlyBreak(int n, double* pb, double** pA, double* ph, double tol)
+// returns true if ||b - Ah||2 < tol
 {
     double* p_a;
     p_a = new double[n];
@@ -118,7 +122,8 @@ bool CheckEarlyBreak(int n, double* pb, double** pA, double* ph, double tol)
 }
 
 void CalculateP(int n, double* pp, double* pr, double* pNu, double beta, 
-                double omega)
+        double omega)
+// p = r + beta*(p- - w*v)
 {
     double* p_a;
     p_a = new double[n];
@@ -132,6 +137,7 @@ void CalculateP(int n, double* pp, double* pr, double* pNu, double beta,
 }
 
 void CalculateH(int n, double* ph, double* px, double alpha, double* pp)
+// h = x - alpha*p
 {
     double* p_a;
     p_a = new double[n];
@@ -143,6 +149,7 @@ void CalculateH(int n, double* ph, double* px, double alpha, double* pp)
 }
 
 void CalculateS(int n, double* ps, double* pr, double alpha, double* pNu)
+// s = r - alpha*v
 {
     double* p_a;
     p_a = new double[n];
@@ -154,6 +161,7 @@ void CalculateS(int n, double* ps, double* pr, double alpha, double* pNu)
 }
 
 void CalculateX(int n, double* px, double* ph, double omega, double* ps)
+// x = h + w*s
 {
     double* p_a;
     p_a = new double[n];
@@ -165,6 +173,7 @@ void CalculateX(int n, double* px, double* ph, double omega, double* ps)
 }
 
 void CalculateR(int n, double* pr, double* ps, double omega, double* pt)
+// r = s - w*t
 {
     double* p_a;
     p_a = new double[n];
