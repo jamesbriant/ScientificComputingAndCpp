@@ -1,5 +1,5 @@
-#include "../include/general.hpp"
-#include "../include/quadrature.hpp"
+#include "general.hpp"
+#include "quadrature.hpp"
 
 double** GenerateSimpsonsMesh(int n, double a, double b)
 // returns n by 2 matrix of x mesh points and w weights
@@ -44,7 +44,9 @@ double** GenerateSimpsonsMesh(int n, double a, double b)
 }
 
 double ApplySimpsonsRule(int n, double a, double b, 
-                         double (*pFunction)(double x))
+            double (*pFunction)(double x))
+// OVERLOADED FUNCTION
+// This version is used in Q1.
 // Apply Simpsons to function f on (a,b) with 2n+1 mesh points
 {
     // Create mesh for integration approximation
@@ -64,3 +66,31 @@ double ApplySimpsonsRule(int n, double a, double b,
     
     return sum;
 }
+
+double ApplySimpsonsRule(int n, double a, double b,
+            double (*pIntegrand)(double x, double h, double a, 
+                double (*pUserFunction)(double x)),
+            double (*pUserFunction)(double x))
+// OVERLOADED FUNCTION
+// This version is used in Q3 where additional user functions are required.
+// Apply Simpsons to function f on (a,b) with 2n+1 mesh points
+{
+    // Create mesh for integration approximation
+    double** p_MeshData = GenerateSimpsonsMesh(n, a, b);
+
+    int N = 2*n + 1;
+    
+    // implement Simpson's Rule
+    double sum = 0;
+    for(int i=0; i<N; i++)
+    {
+        sum += (*pIntegrand)(p_MeshData[i][0], b-a, a, pUserFunction) 
+                    * p_MeshData[i][1];
+    }
+
+    // delete the local matrix
+    DeallocateMatrix(N, p_MeshData);
+    
+    return sum;
+}
+
