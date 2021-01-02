@@ -1,0 +1,252 @@
+\documentclass[a4,10pt,fleqn]{article}  %@@
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\oddsidemargin -0.2in %-0.4in for smaller margins
+\topmargin -1.0in %-1in (for above)
+\textheight 9.8in %10.75in (for above)
+\textwidth 6.75in %6.75in (for above)
+\parindent=0pt
+\usepackage{caption}
+
+%\pagestyle{headings}%{headings}if you want page numbers top right
+
+%***************************************************************************
+%\pagestyle{myheadings}for header and pagenumber with \markright{\rm...{  }}
+%e.g.  \markright{\rm{HG123\ Fourier}}
+%use with \thispagestyle{empty} after begin document
+
+%***************************************************************************
+\newcommand{\ds}{\displaystyle}%display maths
+\newcommand{\sst}{\scriptstyle}%very small maths
+\newcommand{\sm}{\textstyle}%normal size maths
+\newcommand{\bm}[1]{\mbox{\boldmath{$#1$}}}
+\newcommand{\rom}[1]{\mbox{${\rm#1}$}}%roman in maths
+\newcommand{\pa}{\partial}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\na}{\bm\nabla}
+\newcommand{\blR}{\rom{I\!R}}
+\newcommand{\blI}{\rom{I\!I}}
+\newcommand{\there}{$\dot{.\ .}$}
+\renewcommand{\it}{\textit}
+\renewcommand{\sc}{\textsc}
+\renewcommand{\rm}{\textrm}
+\newcommand{\ve}[1]{\mbox{$#1$}}
+\newcommand{\veT}[1]{\mbox{$#1$}^{\operatorname{T}}}
+\newcommand{\tr}{\mbox{Tr}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\norm}[1]{|\!| #1 |\!|}
+\newcommand{\ip}[2]{<#1,#2>}
+\newcommand{\dd}{\mbox{\,d}}
+
+
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+\def\ba{\begin{array}}
+\def\ea{\begin{array}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\beas}{\begin{eqnarray*}}
+\newcommand{\eeas}{\end{eqnarray*}}
+\newcommand{\beg}{\begin{eqngroup}}
+\newcommand{\eeg}{\end{eqngroup}}
+\newcommand{\nno}{\nonumber}
+\def \ptl{\partial}
+
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\vu}{\vect{u}}
+\newcommand{\vf}{\vect{f}}
+\newcommand{\verr}{\vect{e}}
+\newcommand{\vk}{\vect{k}}
+\newcommand{\il}[1]{\texttt{#1}}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+%***************************************************************************
+\begin{document}
+% \sffamily%@@
+\thispagestyle{empty}
+\begin{center}
+University of Nottingham\\
+School of Mathematical Sciences
+\end{center}
+%***************************************************************************
+\large\textsc {MATH4063/G14SCC}\hfill\large\textsc {Scientific Computing and C++}%dont forget to
+%change these
+\vspace*{2ex}
+\hrule
+\vskip0.25cm
+\textbf{Deadline: 8th January 2021, 3:00pm (GMT)}
+\hfill \textbf{Coursework 2 -- Solution Template}\\
+
+\noindent 
+{\em Your solutions to the assessed coursework may be submitted using this template.
+Please cut and paste the output from your codes into the correct parts of this file
+and include your plots and responses to the questions where suggested. Once this
+template has been completed, you must then create a pdf file for submission. Under
+Windows or Mac you can use Texmaker + a LaTeX compiler; from the Windows Virtual
+Desktop this may be accessed as follows:
+\begin{verbatim}
+Start > UoN Application > (UoN) Texmaker 5
+\end{verbatim}
+Open this file under {\tt File}; to build the pdf file, click the arrow next to
+{\tt Quick Build}; this will then generate the file {\tt coursework2\_submission.pdf}. 
+
+\vspace{2mm}
+ You may use an alternative document processing system, such as Word, to produce
+a pdf file containing your results, plots and answers. However, if you do, you must
+format your answers in the same way as suggested below.
+
+\vspace{2mm}
+ A single zip or tar file containing the file {\tt coursework2\_submission.pdf}
+and all the files in the requested folders in the checklists below should be
+submitted on Moodle. Note that all parameters and values should be set within
+your codes: do NOT use inputs such as those obtained with {\tt std::cin} or from
+the command line.
+}
+
+\vspace{25mm}
+\centerline{\LARGE STUDENT NAME}
+
+\clearpage
+
+\section*{Question 1(c)}
+
+\textbf{File checklist for folder \il{Q1}:}
+\begin{itemize}
+ \item \il{AbstractApproximator.cpp}, \il{AbstractApproximator.hpp}
+ \item \il{Driver.cpp}
+ \item \il{Lagrange.cpp}, \il{Lagrange.hpp}
+ \item \il{Vector.cpp}, \il{Vector.hpp}
+ \item For any additional files, provide a \il{README.txt}
+\end{itemize}
+
+\vspace{\baselineskip}
+\begin{enumerate}
+
+\item[1(c)] Enter your output here (max 1 page, display only selected output if necessary).
+
+\begin{verbatim}
+%%%%%%%%%%%%%%%%%%% Output of Driver.cpp %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}
+
+\item[1(c)] Include your plots and comments here.
+
+%\begin{center}
+% \hbox{\hspace*{-10mm} \includegraphics[width=0.6\textwidth]{f1_comparison} \hspace*{-15mm}
+%       \includegraphics[width=0.6\textwidth]{f2_comparison}}
+% \hbox{\hspace*{-10mm} \includegraphics[width=0.6\textwidth]{f3_comparison} \hspace*{-15mm}
+%       \includegraphics[width=0.6\textwidth]{f4_comparison}}
+%\end{center}
+
+\end{enumerate}
+
+\clearpage
+
+\section*{Question 2(c)}
+
+\textbf{File checklist for folder \il{Q2}:}
+\begin{itemize}
+ \item \il{AbstractQuadratureRule.cpp}, \il{AbstractQuadratureRule.hpp}
+ \item \il{Driver.cpp}
+ \item \il{Gauss4point.cpp}, \il{Gauss4point.hpp}
+ \item \il{Matrix.cpp}, \il{Matrix.hpp}
+ \item \il{Simpson.cpp}, \il{Simpson.hpp}
+ \item \il{Vector.cpp}, \il{Vector.hpp}
+ \item For any additional files, provide a \il{README.txt}
+\end{itemize}
+
+\vspace{\baselineskip}
+\begin{enumerate}
+
+\item[2(c)] Enter your output here (display only selected output if necessary).
+
+\begin{verbatim}
+%%%%%%%%%%%%%%%%%%% Output of Driver.cpp %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}
+
+\item[2(c)] Include your plots and comments here.
+
+\end{enumerate}
+
+\clearpage
+
+\section*{Question 3(b)}
+
+\textbf{File checklist for folder \il{Q3}:}
+\begin{itemize}
+ \item \il{AbstractApproximator.cpp}, \il{AbstractApproximator.hpp}
+ \item \il{AbstractQuadratureRule.cpp}, \il{AbstractQuadratureRule.hpp}
+ \item \il{BestL2Fit.cpp}, \il{BestL2Fit.hpp}
+ \item \il{Driver.cpp}
+ \item \il{Gauss4point.cpp}, \il{Gauss4point.hpp}
+ \item \il{Matrix.cpp}, \il{Matrix.hpp}
+ \item \il{Vector.cpp}, \il{Vector.hpp}
+ \item For any additional files, provide a \il{README.txt}
+\end{itemize}
+
+\vspace{\baselineskip}
+\begin{enumerate}
+
+\item[3(b)] Enter your output here (display only selected output if necessary).
+
+\begin{verbatim}
+%%%%%%%%%%%%%%%%%%% Output of Driver.cpp %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}
+
+\item[3(b)] Include your plots and comments here.
+
+%\begin{center}
+% \hbox{\hspace*{-10mm} \includegraphics[width=0.6\textwidth]{f1_comparison} \hspace*{-15mm}
+%       \includegraphics[width=0.6\textwidth]{f2_comparison}}
+% \hbox{\hspace*{-10mm} \includegraphics[width=0.6\textwidth]{f3_comparison} \hspace*{-15mm}
+%       \includegraphics[width=0.6\textwidth]{f4_comparison}}
+%\end{center}
+
+\end{enumerate}
+
+\clearpage
+
+\section*{Question 4(b)}
+
+\textbf{File checklist for folder \il{Q4}:}
+\begin{itemize}
+ \item \il{AbstractApproximator.cpp}, \il{AbstractApproximator.hpp}
+ \item \il{AbstractQuadratureRule.cpp}, \il{AbstractQuadratureRule.hpp}
+ \item \il{Driver.cpp}
+ \item \il{Gauss4point.cpp}, \il{Gauss4point.hpp}
+ \item \il{LocalBestL2Fit.cpp}, \il{LocalBestL2Fit.hpp}
+ \item \il{Matrix.cpp}, \il{Matrix.hpp}
+ \item \il{Vector.cpp}, \il{Vector.hpp}
+ \item For any additional files, provide a \il{README.txt}
+\end{itemize}
+
+\vspace{\baselineskip}
+\begin{enumerate}
+
+\item[4(b)] Enter your output here (display only selected output if necessary).
+
+\begin{verbatim}
+%%%%%%%%%%%%%%%%%%% Output of Driver.cpp %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}
+
+\item[4(b)] Include your plots and comments here.
+
+%\begin{center}
+% \hbox{\hspace*{-10mm} \includegraphics[width=0.6\textwidth]{f1_comparison} \hspace*{-15mm}
+%       \includegraphics[width=0.6\textwidth]{f2_comparison}}
+% \hbox{\hspace*{-10mm} \includegraphics[width=0.6\textwidth]{f3_comparison} \hspace*{-15mm}
+%       \includegraphics[width=0.6\textwidth]{f4_comparison}}
+%\end{center}
+
+\end{enumerate}
+
+\end{document}
