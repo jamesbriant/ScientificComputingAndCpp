@@ -40,6 +40,7 @@ void AbstractApproximator::PrintEvaluatedPoints() const
 }
 
 void AbstractApproximator::SetXpoints(Vector *pXpoints)
+// Set non-uniform x-points
 {
     mpXpoints = pXpoints;
 }
