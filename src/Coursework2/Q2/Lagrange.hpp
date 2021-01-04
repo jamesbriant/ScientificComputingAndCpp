@@ -13,6 +13,7 @@ class Lagrange : public AbstractApproximator
         Vector* mpPolynomialDenominators;
 
         void CalculatePolynomialDenominators();
+        double CalculateL(const int j, const double x) const;
         double CalculateP(const double x) const;
 
     public:
@@ -25,9 +26,9 @@ class Lagrange : public AbstractApproximator
 
         void PrintPolynomialDenominators() const;
         void Approximate(const int nxvalues);
-        
-        // This method has moved from private in Q1 to public in Q2
-        double CalculateL(const int j, const double x) const;
+
+        // a public accessor to retrieve a lagrange polynomial 
+        double GetL(const int j, const double x);
 };
 
 #endif

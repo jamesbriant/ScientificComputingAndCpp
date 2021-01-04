@@ -1,3 +1,5 @@
+#include "Matrix.hpp"
+
 // Solve linear system
 void GaussianElimination(Matrix* p_A, Vector* p_p, Vector* p_f)
 {

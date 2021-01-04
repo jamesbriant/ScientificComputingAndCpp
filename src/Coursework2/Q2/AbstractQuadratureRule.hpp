@@ -5,21 +5,24 @@
 
 class AbstractQuadratureRule
 {
-    private:
-        // hidden default constructor
-        AbstractQuadratureRule();
-
     protected:
-        // specialised constructor
-        AbstractQuadratureRule(const double xmin, const double xmax, 
-            double (*pFunction)(double));
-
+        // class properties
         double mXmin;
         double mXmax;
         double (*mpFunction)(double);
+        Vector* mXvalues;
+        Vector* mWeights;
+
+        // each quadrature has different weights and Xvalues
+        virtual void CalculateXValues() = 0;
+        virtual void CalculateWeights() = 0;
+
+        // an implementation of the quadrature rule
+        virtual double ApplyQuadratureRule(Vector* pEvaluatedPoints) = 0;
+        double CalculateWeightedSum(Vector* pWeights, Vector* pEvaluatedPoints);
 
         double EvaluateLagrangeBasis(const double xval, const int j, 
-            const int npoints, const Vector* pPoints) const;
+            const int npoints, Vector* pPoints) const;
     
     public:
         // overridden default destructor

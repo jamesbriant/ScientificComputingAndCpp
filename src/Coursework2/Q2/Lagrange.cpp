@@ -14,12 +14,9 @@ Lagrange::Lagrange(double (*pFunction)(double), const double xmin,
     mNpoints = npoints;
     mOutputFileName = outputFileName;
 
+    mpXpoints = new Vector(mNpoints);
     mpEvaluatedFunctionPoints = new Vector(mNpoints);
     mpPolynomialDenominators = new Vector(mNpoints);
-
-    CalculateStepSize();
-    CalculateFunctionPoints();
-    CalculatePolynomialDenominators();
 }
 
 Lagrange::~Lagrange()
@@ -29,20 +26,19 @@ Lagrange::~Lagrange()
 
 void Lagrange::CalculatePolynomialDenominators()
 {
-    double product = pow(mStepSize, mNpoints-1); // = h^n
     double denominator;
 
     // iterate over each x-value
     for(int j = 0; j < mNpoints; j++)
     {
-        denominator = product;
+        denominator = 1.0;
 
         // iterate over each xj, xk pair
         for(int k = 0; k < mNpoints; k++)
         {
             if(j != k)
             {
-                denominator *= j-k;
+                denominator *= mpXpoints->Read(j) - mpXpoints->Read(k);
             }
         }
 
@@ -66,7 +62,7 @@ double Lagrange::CalculateL(const int j, const double x) const
     {
         if(k != j)
         {
-            product *= x - mXmin - k*mStepSize;
+            product *= x - mpXpoints->Read(k);
         }
     }
 
@@ -87,6 +83,10 @@ double Lagrange::CalculateP(const double x) const
 
 void Lagrange::Approximate(const int nxvalues)
 {
+    CalculateUniformXPoints();
+    CalculateFunctionPoints();
+    CalculatePolynomialDenominators();
+
     double h = (mXmax - mXmin)/(double)(nxvalues - 1);
     double x;
     double p;
@@ -105,8 +105,6 @@ void Lagrange::Approximate(const int nxvalues)
         p = CalculateP(x);
         true_solution = (*mpFunction)(x);
 
-        //std::cout << "p = " << p << ", sol = " << true_solution << std::endl;
-
         // update inf-norm estimate
         if(fabs(true_solution - p) > inf_norm)
         {
@@ -119,4 +117,12 @@ void Lagrange::Approximate(const int nxvalues)
 
     writeFile.close();
     std::cout << "inf-norm approximation = " << inf_norm << std::endl;
+}
+
+double Lagrange::GetL(const int j, const double x)
+{
+    CalculateFunctionPoints();
+    CalculatePolynomialDenominators();
+
+    return CalculateL(j, x);
 }
