@@ -7,15 +7,13 @@
 class AbstractApproximator
 {
     protected:
-        // overridden default constructor/destructor
-        //AbstractApproximator();
+        // overridden default destructor
         ~AbstractApproximator();
 
         // common properties (object data)
         double mXmin;
         double mXmax;
         int mNpoints;
-        //double mStepSize; // = (mXmax-mXmin)/(mNpoints-1)
         double (*mpFunction)(double);
         std::string mOutputFileName;
 
@@ -33,7 +31,6 @@ class AbstractApproximator
     public:
         virtual void Approximate(const int nxvalues) = 0;
         void PrintEvaluatedPoints() const;
-        void SetXpoints(Vector *pXpoints);
 
 };
 

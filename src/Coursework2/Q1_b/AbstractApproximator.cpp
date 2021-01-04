@@ -38,9 +38,3 @@ void AbstractApproximator::PrintEvaluatedPoints() const
 {
     std::cout << *mpEvaluatedFunctionPoints << std::endl;
 }
-
-void AbstractApproximator::SetXpoints(Vector *pXpoints)
-// Set non-uniform x-points
-{
-    mpXpoints = pXpoints;
-}

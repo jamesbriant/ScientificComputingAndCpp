@@ -105,8 +105,6 @@ void Lagrange::Approximate(const int nxvalues)
         p = CalculateP(x);
         true_solution = (*mpFunction)(x);
 
-        //std::cout << "p = " << p << ", sol = " << true_solution << std::endl;
-
         // update inf-norm estimate
         if(fabs(true_solution - p) > inf_norm)
         {
