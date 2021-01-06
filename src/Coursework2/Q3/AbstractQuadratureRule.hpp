@@ -19,14 +19,15 @@ class AbstractQuadratureRule
 
         // an implementation of the quadrature rule
         virtual double ApplyQuadratureRule(Vector* pEvaluatedPoints) = 0;
+
+        // general weighted sum of values algorithm
         double CalculateWeightedSum(Vector* pWeights, Vector* pEvaluatedPoints);
 
+        // calculates the jth lagrange basis using data provided
         double EvaluateLagrangeBasis(const double xval, const int j, 
             const int npoints, Vector* pPoints) const;
     
     public:
-        // overridden default destructor
-        //~AbstractQuadratureRule();
 
         virtual double IntegrateFunction() = 0;
         virtual double IntegrateRHSProduct(const int i, int npoints, 

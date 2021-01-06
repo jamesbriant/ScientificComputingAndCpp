@@ -7,31 +7,29 @@
 class AbstractApproximator
 {
     protected:
-        // overridden default destructor
-        ~AbstractApproximator();
-
         // common properties (object data)
         double mXmin;
         double mXmax;
         int mNpoints;
         double (*mpFunction)(double);
         std::string mOutputFileName;
+        bool mIsXPointsSet;
 
         // vector of x-values, of length mNpoints on [mXmin, mXmax]
         Vector* mpXpoints;
-        // vector of f(x) for each x
-        Vector* mpEvaluatedFunctionPoints;// = new Vector(mNpoints);
 
-        // calculate stepsize
+        // calculate uniform stepsize
         double CalculateUniformXStepSize() const;
-        void CalculateUniformXPoints();
-        // evaluates mpFunction at the x values
-        void CalculateFunctionPoints();
 
     public:
+        // saves approximations to a file
         virtual void Approximate(const int nxvalues) = 0;
-        void PrintEvaluatedPoints() const;
-        void SetXpoints(Vector* pXpoints);
+
+        // sets the X points to be uniformly spaced
+        void UseUniformXPoints();
+
+        // use user defined Xpoints
+        void SetXPoints(Vector& pXpoints);
 
 };
 

@@ -20,12 +20,25 @@ Lagrange::Lagrange(double (*pFunction)(double), const double xmin,
     mpPolynomialDenominators = new Vector(mNpoints);
 }
 
+Lagrange::Lagrange(const double xmin, const double xmax, const int npoints)
+// specialised constructor for evaluating lagrange polynomials only
+{
+    mXmin = xmin;
+    mXmax = xmax;
+    assert(npoints > 0);
+    mNpoints = npoints;
+    mIsXPointsSet = false;
+
+    mpXpoints = new Vector(mNpoints);
+    mpEvaluatedFunctionPoints = new Vector(mNpoints);
+    mpPolynomialDenominators = new Vector(mNpoints);
+}
+
 Lagrange::~Lagrange()
 {
     delete mpXpoints;
     delete mpEvaluatedFunctionPoints;
     delete mpPolynomialDenominators;
-
 }
 
 void Lagrange::CalculatePolynomialDenominators()
@@ -52,7 +65,7 @@ void Lagrange::CalculatePolynomialDenominators()
 }
 
 void Lagrange::PrintPolynomialDenominators() const
-// prints to screen
+// This is primarily used for testing
 {
     std::cout << *mpPolynomialDenominators << std::endl;
 }
@@ -139,4 +152,16 @@ void Lagrange::PrintEvaluatedPoints() const
 // This is primarily used for testing
 {
     std::cout << *mpEvaluatedFunctionPoints << std::endl;
+}
+
+double Lagrange::GetL(const int j, const double x)
+// a public accessor to retrieve a lagrange polynomial 
+{
+    if(mIsXPointsSet == false)
+    {
+        UseUniformXPoints();
+    }
+    CalculatePolynomialDenominators();
+
+    return CalculateL(j, x);
 }

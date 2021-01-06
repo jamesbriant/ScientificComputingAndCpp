@@ -13,6 +13,7 @@ Lagrange::Lagrange(double (*pFunction)(double), const double xmin,
     assert(npoints > 0);
     mNpoints = npoints;
     mOutputFileName = outputFileName;
+    mIsXPointsSet = false;
 
     mpXpoints = new Vector(mNpoints);
     mpEvaluatedFunctionPoints = new Vector(mNpoints);
@@ -21,6 +22,8 @@ Lagrange::Lagrange(double (*pFunction)(double), const double xmin,
 
 Lagrange::~Lagrange()
 {
+    delete mpXpoints;
+    delete mpEvaluatedFunctionPoints;
     delete mpPolynomialDenominators;
 }
 
@@ -83,7 +86,10 @@ double Lagrange::CalculateP(const double x) const
 
 void Lagrange::Approximate(const int nxvalues)
 {
-    CalculateUniformXPoints();
+    if(mIsXPointsSet == false)
+    {
+        UseUniformXPoints();
+    }
     CalculateFunctionPoints();
     CalculatePolynomialDenominators();
 
@@ -119,9 +125,28 @@ void Lagrange::Approximate(const int nxvalues)
     std::cout << "inf-norm approximation = " << inf_norm << std::endl;
 }
 
-double Lagrange::GetL(const int j, const double x)
+// evaluate the function at the x-values
+void Lagrange::CalculateFunctionPoints()
 {
-    CalculateFunctionPoints();
+    for(int i = 0; i < mNpoints; i++)
+    {
+        (*mpEvaluatedFunctionPoints)[i] = mpFunction(mpXpoints->Read(i));
+    }
+}
+
+void Lagrange::PrintEvaluatedPoints() const
+// This is primarily used for testing
+{
+    std::cout << *mpEvaluatedFunctionPoints << std::endl;
+}
+
+double Lagrange::GetL(const int j, const double x)
+// a public accessor to retrieve a lagrange polynomial 
+{
+    if(mIsXPointsSet == false)
+    {
+        UseUniformXPoints();
+    }
     CalculatePolynomialDenominators();
 
     return CalculateL(j, x);

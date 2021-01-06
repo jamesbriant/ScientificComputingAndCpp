@@ -64,7 +64,7 @@ double Gauss4Point::IntegrateFunction()
 double Gauss4Point::IntegrateRHSProduct(const int i, int npoints, Vector* pPoints)
 {
     Vector* pEvaluatedPoints = new Vector(4);
-
+    
     for(int k = 0; k < length(*pEvaluatedPoints); k++)
     {
         (*pEvaluatedPoints)[k] = 

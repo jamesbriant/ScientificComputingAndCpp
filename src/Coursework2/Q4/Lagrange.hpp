@@ -6,7 +6,7 @@
 class Lagrange : public AbstractApproximator
 {
     private:
-        // Hide the default constructor
+        // Hidden default constructor
         Lagrange();
 
         // data varaiables
@@ -30,6 +30,9 @@ class Lagrange : public AbstractApproximator
             const double xmax, const int npoints, 
             const std::string outputFileName="output.dat");
 
+        // specialised constructor for evaluating polynomials
+        Lagrange(const double xmin, const double xmax, const int npoints);
+
         // overriden default destructor
         ~Lagrange();
 
@@ -41,6 +44,9 @@ class Lagrange : public AbstractApproximator
 
         // saves approximation values
         void Approximate(const int nxvalues);
+
+        // a public accessor to retrieve a lagrange polynomial 
+        double GetL(const int j, const double x);
 };
 
 #endif

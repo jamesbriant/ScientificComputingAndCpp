@@ -1,12 +1,5 @@
 #include "AbstractApproximator.hpp"
 
-// overridden default destructor
-AbstractApproximator::~AbstractApproximator()
-{
-    delete mpXpoints;
-    delete mpEvaluatedFunctionPoints;
-}
-
 // Calculate the step size in the x-values
 double AbstractApproximator::CalculateUniformXStepSize() const
 {
@@ -14,7 +7,7 @@ double AbstractApproximator::CalculateUniformXStepSize() const
 }
 
 // Set uniform points
-void AbstractApproximator::CalculateUniformXPoints()
+void AbstractApproximator::UseUniformXPoints()
 {
     double step_size = CalculateUniformXStepSize();
 
@@ -22,25 +15,13 @@ void AbstractApproximator::CalculateUniformXPoints()
     {
         (*mpXpoints)[i] = mXmin + i*step_size;
     }
+
+    mIsXPointsSet = true;
 }
 
-// evaluate the function at the x-values
-void AbstractApproximator::CalculateFunctionPoints()
-{
-    for(int i = 0; i < mNpoints; i++)
-    {
-        (*mpEvaluatedFunctionPoints)[i] = mpFunction(mpXpoints->Read(i));
-    }
-}
-
-void AbstractApproximator::PrintEvaluatedPoints() const
-// This is primarily used for testing
-{
-    std::cout << *mpEvaluatedFunctionPoints << std::endl;
-}
-
-void AbstractApproximator::SetXpoints(Vector* pXpoints)
+void AbstractApproximator::SetXPoints(Vector* pXPoints)
 // Set non-uniform x-points
 {
-    mpXpoints = pXpoints;
+    mpXpoints = pXPoints;
+    mIsXPointsSet = true;
 }

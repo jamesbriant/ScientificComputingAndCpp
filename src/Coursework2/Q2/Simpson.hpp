@@ -20,6 +20,7 @@ class Simpson : public AbstractQuadratureRule
         // specialised constructor
         Simpson(const double xmin, const double xmax, 
             double (*pFunction)(double));
+            
         // overridden default destructor
         ~Simpson();
 

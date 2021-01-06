@@ -1,12 +1,6 @@
 #include "AbstractQuadratureRule.hpp"
 #include "Lagrange.hpp"
 
-// AbstractQuadratureRule::~AbstractQuadratureRule()
-// {
-//     delete mXvalues;
-//     delete mWeights;
-// }
-
 double AbstractQuadratureRule::CalculateWeightedSum(Vector* pWeights, 
     Vector* pEvaluatedPoints)
 {
@@ -21,10 +15,10 @@ double AbstractQuadratureRule::CalculateWeightedSum(Vector* pWeights,
 }
 
 double AbstractQuadratureRule::EvaluateLagrangeBasis(const double xval, 
-    const int j, const int npoints, Vector *pPoints) const
+    const int j, const int npoints, Vector* pPoints) const
 {
-    Lagrange* Basis = new Lagrange(mpFunction, mXmin, mXmax, npoints);
-    Basis->SetXpoints(pPoints);
+    Lagrange* Basis = new Lagrange(mXmin, mXmax, npoints);
+    Basis->SetXPoints(*pPoints);
     
     double output = Basis->GetL(j, xval);
     delete Basis;

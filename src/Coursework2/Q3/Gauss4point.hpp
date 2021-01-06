@@ -20,6 +20,7 @@ class Gauss4Point : public AbstractQuadratureRule
         // specialised constructor
         Gauss4Point(const double xmin, const double xmax, 
             double (*pFunction)(double));
+        
         // overridden default destructor
         ~Gauss4Point();
 
