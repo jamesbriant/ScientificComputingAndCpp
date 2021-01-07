@@ -22,7 +22,7 @@ class Lagrange : public AbstractApproximator
         void CalculateFunctionPoints();
 
         double CalculateL(const int j, const double x) const; // Lj(x)
-        double CalculateP(const double x) const; // p(x)
+        double CalculatePolynomialApproximation(const double x) const; // p(x)
 
     public:
         // specialised constructor

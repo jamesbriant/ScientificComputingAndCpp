@@ -94,7 +94,7 @@ void Lagrange::Approximate(const int nxvalues)
     CalculateFunctionPoints();
     CalculatePolynomialDenominators();
 
-    double h = (mXmax - mXmin)/(double)(nxvalues - 1);
+    double step_size = (mXmax - mXmin)/(double)(nxvalues - 1);
     double x;
     double p;
     double true_solution;
@@ -106,7 +106,7 @@ void Lagrange::Approximate(const int nxvalues)
     // interpolate the solution for each of the nxvalues
     for(int i = 0; i < nxvalues; i++)
     {
-        x = mXmin + i*h;
+        x = mXmin + i*step_size;
 
         // get the approximation pn(x)
         p = CalculateP(x);

@@ -48,32 +48,32 @@ double Gauss4Point::ApplyQuadratureRule(Vector* pEvaluatedPoints)
 
 double Gauss4Point::IntegrateFunction()
 {
-    Vector* pEvaluatedPoints = new Vector(4);
+    Vector* p_evaluated_points = new Vector(4);
 
-    for(int k = 0; k < length(*pEvaluatedPoints); k++)
+    for(int k = 0; k < length(*p_evaluated_points); k++)
     {
-        (*pEvaluatedPoints)[k] = (*mpFunction)(mXvalues->Read(k));
+        (*p_evaluated_points)[k] = (*mpFunction)(mXvalues->Read(k));
     }
 
-    double output = ApplyQuadratureRule(pEvaluatedPoints);
-    delete pEvaluatedPoints;
+    double output = ApplyQuadratureRule(p_evaluated_points);
+    delete p_evaluated_points;
 
     return output;
 }
 
 double Gauss4Point::IntegrateRHSProduct(const int i, int npoints, Vector* pPoints)
 {
-    Vector* pEvaluatedPoints = new Vector(4);
+    Vector* p_evaluated_points = new Vector(4);
     
-    for(int k = 0; k < length(*pEvaluatedPoints); k++)
+    for(int k = 0; k < length(*p_evaluated_points); k++)
     {
-        (*pEvaluatedPoints)[k] = 
+        (*p_evaluated_points)[k] = 
             (*mpFunction)(mXvalues->Read(k))*
             EvaluateLagrangeBasis(mXvalues->Read(k), i, npoints, pPoints);
     }
 
-    double output = ApplyQuadratureRule(pEvaluatedPoints);
-    delete pEvaluatedPoints;
+    double output = ApplyQuadratureRule(p_evaluated_points);
+    delete p_evaluated_points;
 
     return output;
 }
@@ -81,17 +81,17 @@ double Gauss4Point::IntegrateRHSProduct(const int i, int npoints, Vector* pPoint
 double Gauss4Point::IntegrateMatrixProduct(const int i, const int j, 
             int npoints, Vector* pPoints)
 {
-    Vector* pEvaluatedPoints = new Vector(4);
+    Vector* p_evaluated_points = new Vector(4);
 
-    for(int k = 0; k < length(*pEvaluatedPoints); k++)
+    for(int k = 0; k < length(*p_evaluated_points); k++)
     {
-        (*pEvaluatedPoints)[k] = 
+        (*p_evaluated_points)[k] = 
             EvaluateLagrangeBasis(mXvalues->Read(k), j, npoints, pPoints)*
             EvaluateLagrangeBasis(mXvalues->Read(k), i, npoints, pPoints);
     }
 
-    double output = ApplyQuadratureRule(pEvaluatedPoints);
-    delete pEvaluatedPoints;
+    double output = ApplyQuadratureRule(p_evaluated_points);
+    delete p_evaluated_points;
 
     return output;
 }

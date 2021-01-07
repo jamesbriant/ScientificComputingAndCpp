@@ -13,106 +13,126 @@ double f4(double x);
 int main(int argc, char* argv[])
 {
     // ####### PART 1 #######
-    std::cout << "Question 1ci" << std::endl;
-    std::cout << "f1 approximation:" << std::endl;
-    Lagrange* f1approximate0 = new Lagrange(f1, 0.0, 1.0, 10, "data/f1approximate0.dat");
-    f1approximate0->Approximate(101);
-    std::cout << std::endl << "f2 approximation:" << std::endl;
-    Lagrange* f2approximate0 = new Lagrange(f2, 0.0, 1.0, 10, "data/f2approximate0.dat");
-    f2approximate0->Approximate(101);
-    std::cout << std::endl << "f3 approximation:" << std::endl;
-    Lagrange* f3approximate0 = new Lagrange(f3, 0.0, 1.0, 10, "data/f3approximate0.dat");
-    f3approximate0->Approximate(101);
-    std::cout << std::endl << "f4 approximation:" << std::endl;
-    Lagrange* f4approximate0 = new Lagrange(f4, 0.0, 1.0, 10, "data/f4approximate0.dat");
-    f4approximate0->Approximate(101);
+    std::cout << "Question 1ci" << std::endl << std::endl;
+    std::cout << "f1: ";
+    Lagrange* p_f1_approximate0 = 
+        new Lagrange(f1, 0.0, 1.0, 10, "data/f1approximate0.dat");
+    p_f1_approximate0->Approximate(101);
+    std::cout << "f2: ";
+    Lagrange* p_f2_approximate0 = 
+        new Lagrange(f2, 0.0, 1.0, 10, "data/f2approximate0.dat");
+    p_f2_approximate0->Approximate(101);
+    std::cout << "f3: ";
+    Lagrange* p_f3_approximate0 = 
+        new Lagrange(f3, 0.0, 1.0, 10, "data/f3approximate0.dat");
+    p_f3_approximate0->Approximate(101);
+    std::cout << "f4: ";
+    Lagrange* p_f4_approximate0 = 
+        new Lagrange(f4, 0.0, 1.0, 10, "data/f4approximate0.dat");
+    p_f4_approximate0->Approximate(101);
 
-    delete f1approximate0;
-    delete f2approximate0;
-    delete f3approximate0;
-    delete f4approximate0;
+    delete p_f1_approximate0;
+    delete p_f2_approximate0;
+    delete p_f3_approximate0;
+    delete p_f4_approximate0;
 
     std::cout << std::endl;
 
 
     // ####### PART 2 #######
-    std::cout << "Question 1cii" << std::endl;
+    std::cout << "Question 1cii" << std::endl << std::endl;
 
-    std::cout << std::endl << "f1 approximation:" << std::endl;
-    std::cout << "n = 1:" << std::endl;
-    Lagrange* f1approximate1 = new Lagrange(f1, 0.0, 1.0, 2, "data/f1approximate1.dat");
-    f1approximate1->Approximate(101);
-    std::cout << "n = 2:" << std::endl;
-    Lagrange* f1approximate2 = new Lagrange(f1, 0.0, 1.0, 3, "data/f1approximate2.dat");
-    f1approximate2->Approximate(101);
-    std::cout << "n = 3:" << std::endl;
-    Lagrange* f1approximate3 = new Lagrange(f1, 0.0, 1.0, 4, "data/f1approximate3.dat");
-    f1approximate3->Approximate(101);
-    std::cout << "n = 15:" << std::endl;
-    Lagrange* f1approximate4 = new Lagrange(f1, 0.0, 1.0, 16, "data/f1approximate4.dat");
-    f1approximate4->Approximate(101);
+    std::cout << "f1 approximation:" << std::endl;
+    std::cout << "n = 1: ";
+    Lagrange* p_f1_approximate1 = 
+        new Lagrange(f1, 0.0, 1.0, 2, "data/f1approximate1.dat");
+    p_f1_approximate1->Approximate(101);
+    std::cout << "n = 2: ";
+    Lagrange* p_f1_approximate2 = 
+        new Lagrange(f1, 0.0, 1.0, 3, "data/f1approximate2.dat");
+    p_f1_approximate2->Approximate(101);
+    std::cout << "n = 3: ";
+    Lagrange* p_f1_approximate3 = 
+        new Lagrange(f1, 0.0, 1.0, 4, "data/f1approximate3.dat");
+    p_f1_approximate3->Approximate(101);
+    std::cout << "n = 15: ";
+    Lagrange* p_f1_approximate4 = 
+        new Lagrange(f1, 0.0, 1.0, 16, "data/f1approximate4.dat");
+    p_f1_approximate4->Approximate(101);
 
-    delete f1approximate1;
-    delete f1approximate2;
-    delete f1approximate3;
-    delete f1approximate4;
+    delete p_f1_approximate1;
+    delete p_f1_approximate2;
+    delete p_f1_approximate3;
+    delete p_f1_approximate4;
 
     std::cout << std::endl << "f2 approximation:" << std::endl;
-    std::cout << "n = 1:" << std::endl;
-    Lagrange* f2approximate1 = new Lagrange(f2, 0.0, 1.0, 2, "data/f2approximate1.dat");
-    f2approximate1->Approximate(101);
-    std::cout << "n = 2:" << std::endl;
-    Lagrange* f2approximate2 = new Lagrange(f2, 0.0, 1.0, 3, "data/f2approximate2.dat");
-    f2approximate2->Approximate(101);
-    std::cout << "n = 3:" << std::endl;
-    Lagrange* f2approximate3 = new Lagrange(f2, 0.0, 1.0, 4, "data/f2approximate3.dat");
-    f2approximate3->Approximate(101);
-    std::cout << "n = 7:" << std::endl;
-    Lagrange* f2approximate4 = new Lagrange(f2, 0.0, 1.0, 8, "data/f2approximate4.dat");
-    f2approximate4->Approximate(101);
+    std::cout << "n = 1: ";
+    Lagrange* p_f2_approximate1 = 
+        new Lagrange(f2, 0.0, 1.0, 2, "data/f2approximate1.dat");
+    p_f2_approximate1->Approximate(101);
+    std::cout << "n = 2: ";
+    Lagrange* p_f2_approximate2 = 
+        new Lagrange(f2, 0.0, 1.0, 3, "data/f2approximate2.dat");
+    p_f2_approximate2->Approximate(101);
+    std::cout << "n = 3: ";
+    Lagrange* p_f2_approximate3 = 
+        new Lagrange(f2, 0.0, 1.0, 4, "data/f2approximate3.dat");
+    p_f2_approximate3->Approximate(101);
+    std::cout << "n = 7: ";
+    Lagrange* p_f2_approximate4 = 
+        new Lagrange(f2, 0.0, 1.0, 8, "data/f2approximate4.dat");
+    p_f2_approximate4->Approximate(101);
 
-    delete f2approximate1;
-    delete f2approximate2;
-    delete f2approximate3;
-    delete f2approximate4;
+    delete p_f2_approximate1;
+    delete p_f2_approximate2;
+    delete p_f2_approximate3;
+    delete p_f2_approximate4;
 
     std::cout << std::endl << "f3 approximation:" << std::endl;
-    std::cout << "n = 2:" << std::endl;
-    Lagrange* f3approximate1 = new Lagrange(f3, 0.0, 1.0, 3, "data/f3approximate1.dat");
-    f3approximate1->Approximate(101);
-    std::cout << "n = 6:" << std::endl;
-    Lagrange* f3approximate2 = new Lagrange(f3, 0.0, 1.0, 7, "data/f3approximate2.dat");
-    f3approximate2->Approximate(101);
-    std::cout << "n = 9:" << std::endl;
-    Lagrange* f3approximate3 = new Lagrange(f3, 0.0, 1.0, 10, "data/f3approximate3.dat");
-    f3approximate3->Approximate(101);
-    std::cout << "n = 15:" << std::endl;
-    Lagrange* f3approximate4 = new Lagrange(f3, 0.0, 1.0, 16, "data/f3approximate4.dat");
-    f3approximate4->Approximate(101);
+    std::cout << "n = 2: ";
+    Lagrange* p_f3_approximate1 = 
+        new Lagrange(f3, 0.0, 1.0, 3, "data/f3approximate1.dat");
+    p_f3_approximate1->Approximate(101);
+    std::cout << "n = 6: ";
+    Lagrange* p_f3_approximate2 = 
+        new Lagrange(f3, 0.0, 1.0, 7, "data/f3approximate2.dat");
+    p_f3_approximate2->Approximate(101);
+    std::cout << "n = 9: ";
+    Lagrange* p_f3_approximate3 = 
+        new Lagrange(f3, 0.0, 1.0, 10, "data/f3approximate3.dat");
+    p_f3_approximate3->Approximate(101);
+    std::cout << "n = 15: ";
+    Lagrange* p_f3_approximate4 = 
+        new Lagrange(f3, 0.0, 1.0, 16, "data/f3approximate4.dat");
+    p_f3_approximate4->Approximate(101);
 
-    delete f3approximate1;
-    delete f3approximate2;
-    delete f3approximate3;
-    delete f3approximate4;
+    delete p_f3_approximate1;
+    delete p_f3_approximate2;
+    delete p_f3_approximate3;
+    delete p_f3_approximate4;
 
     std::cout << std::endl << "f4 approximation:" << std::endl;
-    std::cout << "n = 1:" << std::endl;
-    Lagrange* f4approximate1 = new Lagrange(f4, 0.0, 1.0, 2, "data/f4approximate1.dat");
-    f4approximate1->Approximate(101);
-    std::cout << "n = 3:" << std::endl;
-    Lagrange* f4approximate2 = new Lagrange(f4, 0.0, 1.0, 4, "data/f4approximate2.dat");
-    f4approximate2->Approximate(101);
-    std::cout << "n = 7:" << std::endl;
-    Lagrange* f4approximate3 = new Lagrange(f4, 0.0, 1.0, 8, "data/f4approximate3.dat");
-    f4approximate3->Approximate(101);
-    std::cout << "n = 15:" << std::endl;
-    Lagrange* f4approximate4 = new Lagrange(f4, 0.0, 1.0, 16, "data/f4approximate4.dat");
-    f4approximate4->Approximate(101);
+    std::cout << "n = 1: ";
+    Lagrange* p_f4_approximate1 = 
+        new Lagrange(f4, 0.0, 1.0, 2, "data/f4approximate1.dat");
+    p_f4_approximate1->Approximate(101);
+    std::cout << "n = 3: ";
+    Lagrange* p_f4_approximate2 = 
+        new Lagrange(f4, 0.0, 1.0, 4, "data/f4approximate2.dat");
+    p_f4_approximate2->Approximate(101);
+    std::cout << "n = 7: ";
+    Lagrange* p_f4_approximate3 = 
+        new Lagrange(f4, 0.0, 1.0, 8, "data/f4approximate3.dat");
+    p_f4_approximate3->Approximate(101);
+    std::cout << "n = 15: ";
+    Lagrange* p_f4_approximate4 = 
+        new Lagrange(f4, 0.0, 1.0, 16, "data/f4approximate4.dat");
+    p_f4_approximate4->Approximate(101);
 
-    delete f4approximate1;
-    delete f4approximate2;
-    delete f4approximate3;
-    delete f4approximate4;
+    delete p_f4_approximate1;
+    delete p_f4_approximate2;
+    delete p_f4_approximate3;
+    delete p_f4_approximate4;
 
     return 0;
 }

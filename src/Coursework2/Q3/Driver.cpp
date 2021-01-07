@@ -149,45 +149,45 @@ double f4(double x)
 }
 
 // copy data at FileName to p_data
-void ReadData(std::string FileName, Vector* p_data)
+void ReadData(std::string fileName, Vector* pData)
 {
     std::ifstream readFile; // Define Input stream
-    readFile.open(FileName); // Open file
+    readFile.open(fileName); // Open file
     //assert(readFile.is_open()); // Check file is open
 
     double dump;
-    //Vector* readin = new Vector(101);
   
     for (int i=0; i<101; i++)
     {
-        readFile >> dump >> (*p_data)[i];
-        //std::cout << readin->Read(i) << std::endl;
+        readFile >> dump >> (*pData)[i];
     }
   
     readFile.close();
 }
 
-double MaxError(Vector* p_estimate, Vector* p_true_solution)
+// calculate the maximum error at the evaluated points
+double MaxError(Vector* pEstimate, Vector* pTrueSolution)
 {
     double max_error = 0.0;
 
-    for(int i=0; i<length(*p_estimate); i++)
+    for(int i=0; i<length(*pEstimate); i++)
     {
-        if(fabs(p_estimate->Read(i) - p_true_solution->Read(i)) > max_error)
+        if(fabs(pEstimate->Read(i) - pTrueSolution->Read(i)) > max_error)
         {
-            max_error = fabs(p_estimate->Read(i) - p_true_solution->Read(i));
+            max_error = fabs(pEstimate->Read(i) - pTrueSolution->Read(i));
         }
     }
 
     return max_error;
 }
 
-double L2Norm(Vector& p_a, Vector& p_b)
+// calculate the L2-norm of the difference between Vectors pA and pB
+double L2Norm(Vector& pA, Vector& pB)
 {
-    Vector* pDifference = new Vector(101);
-    *pDifference = p_a - p_b;
-    double output = sqrt(pDifference->ScalarProduct(*pDifference)/101.0);
+    Vector* p_difference = new Vector(101);
+    *p_difference = pA - pB;
+    double output = sqrt(p_difference->ScalarProduct(*p_difference)/101.0);
 
-    delete pDifference;
+    delete p_difference;
     return output;
 }

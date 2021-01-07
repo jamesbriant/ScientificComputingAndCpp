@@ -72,7 +72,7 @@ double Lagrange::CalculateL(const int j, const double x) const
     return product/(*mpPolynomialDenominators)[j];
 }
 
-double Lagrange::CalculateP(const double x) const
+double Lagrange::CalculatePolynomialApproximation(const double x) const
 {
     double p = 0.0;
 
@@ -86,6 +86,7 @@ double Lagrange::CalculateP(const double x) const
 
 void Lagrange::Approximate(const int nxvalues)
 {
+    // check xpoints have been evaluated
     if(mIsXPointsSet == false)
     {
         UseUniformXPoints();
@@ -93,7 +94,7 @@ void Lagrange::Approximate(const int nxvalues)
     CalculateFunctionPoints();
     CalculatePolynomialDenominators();
 
-    double h = (mXmax - mXmin)/(double)(nxvalues - 1);
+    double step_size = (mXmax - mXmin)/(double)(nxvalues - 1);
     double x;
     double p;
     double true_solution;
@@ -105,10 +106,10 @@ void Lagrange::Approximate(const int nxvalues)
     // interpolate the solution for each of the nxvalues
     for(int i = 0; i < nxvalues; i++)
     {
-        x = mXmin + i*h;
+        x = mXmin + i*step_size;
 
         // get the approximation pn(x)
-        p = CalculateP(x);
+        p = CalculatePolynomialApproximation(x);
         true_solution = (*mpFunction)(x);
 
         // update inf-norm estimate
@@ -134,14 +135,15 @@ void Lagrange::CalculateFunctionPoints()
     }
 }
 
+// print the evaluated points
 void Lagrange::PrintEvaluatedPoints() const
 // This is primarily used for testing
 {
     std::cout << *mpEvaluatedFunctionPoints << std::endl;
 }
 
-double Lagrange::GetL(const int j, const double x)
 // a public accessor to retrieve a lagrange polynomial 
+double Lagrange::GetL(const int j, const double x)
 {
     if(mIsXPointsSet == false)
     {

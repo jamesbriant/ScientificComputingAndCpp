@@ -42,32 +42,32 @@ double Simpson::ApplyQuadratureRule(Vector* pEvaluatedPoints)
 
 double Simpson::IntegrateFunction()
 {
-    Vector* pEvaluatedPoints = new Vector(3);
+    Vector* p_evaluated_points = new Vector(3);
     
-    for(int k = 0; k < length(*pEvaluatedPoints); k++)
+    for(int k = 0; k < length(*p_evaluated_points); k++)
     {
-        (*pEvaluatedPoints)[k] = (*mpFunction)(mXvalues->Read(k));
+        (*p_evaluated_points)[k] = (*mpFunction)(mXvalues->Read(k));
     }
 
-    double output = ApplyQuadratureRule(pEvaluatedPoints);
-    delete pEvaluatedPoints;
+    double output = ApplyQuadratureRule(p_evaluated_points);
+    delete p_evaluated_points;
 
     return output;
 }
 
 double Simpson::IntegrateRHSProduct(const int i, int npoints, Vector* pPoints)
 {
-    Vector* pEvaluatedPoints = new Vector(3);
+    Vector* p_evaluated_points = new Vector(3);
 
-    for(int k = 0; k < length(*pEvaluatedPoints); k++)
+    for(int k = 0; k < length(*p_evaluated_points); k++)
     {
-        (*pEvaluatedPoints)[k] = 
+        (*p_evaluated_points)[k] = 
             (*mpFunction)(mXvalues->Read(k))*
             EvaluateLagrangeBasis(mXvalues->Read(k), i, npoints, pPoints);
     }
 
-    double output = ApplyQuadratureRule(pEvaluatedPoints);
-    delete pEvaluatedPoints;
+    double output = ApplyQuadratureRule(p_evaluated_points);
+    delete p_evaluated_points;
 
     return output;
 }
@@ -75,17 +75,17 @@ double Simpson::IntegrateRHSProduct(const int i, int npoints, Vector* pPoints)
 double Simpson::IntegrateMatrixProduct(const int i, const int j, 
             int npoints, Vector* pPoints)
 {
-    Vector* pEvaluatedPoints = new Vector(3);
+    Vector* p_evaluated_points = new Vector(3);
 
-    for(int k = 0; k < length(*pEvaluatedPoints); k++)
+    for(int k = 0; k < length(*p_evaluated_points); k++)
     {
-        (*pEvaluatedPoints)[k] = 
+        (*p_evaluated_points)[k] = 
             EvaluateLagrangeBasis(mXvalues->Read(k), j, npoints, pPoints)*
             EvaluateLagrangeBasis(mXvalues->Read(k), i, npoints, pPoints);
     }
 
-    double output = ApplyQuadratureRule(pEvaluatedPoints);
-    delete pEvaluatedPoints;
+    double output = ApplyQuadratureRule(p_evaluated_points);
+    delete p_evaluated_points;
 
     return output;
 }

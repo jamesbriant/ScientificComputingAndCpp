@@ -15,7 +15,7 @@ class LocalBestL2Fit : public AbstractApproximator
         double mIntervalWidth;
         double mMiniStepSize;
         AbstractQuadratureRule* mpIntegrator;
-        Matrix* mpXpoints;
+        Matrix* mpPolynomialCoefficients;
 
         void CalculateFVector(Vector* pF, const int i);
         void CalculateAMatrix(Matrix* pA, const int i);

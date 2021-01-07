@@ -17,11 +17,11 @@ double AbstractQuadratureRule::CalculateWeightedSum(Vector* pWeights,
 double AbstractQuadratureRule::EvaluateLagrangeBasis(const double xval, 
     const int j, const int npoints, Vector* pPoints) const
 {
-    Lagrange* Basis = new Lagrange(mXmin, mXmax, npoints);
-    Basis->SetXPoints(*pPoints);
+    Lagrange* p_basis = new Lagrange(mXmin, mXmax, npoints);
+    p_basis->SetXPoints(*pPoints);
     
-    double output = Basis->GetL(j, xval);
-    delete Basis;
+    double output = p_basis->GetL(j, xval);
+    delete p_basis;
 
     return output;
 }

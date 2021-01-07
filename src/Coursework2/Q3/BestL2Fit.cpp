@@ -100,14 +100,14 @@ void BestL2Fit::GaussianElimination(Matrix* p_A, Vector* p_p, Vector* p_f)
 double BestL2Fit::CalculatePolynomialApproximation(const double x)
 {
     double sum = 0.0;
-    Lagrange* Basis = new Lagrange(mXmin, mXmax, mNpoints);
+    Lagrange* p_basis = new Lagrange(mXmin, mXmax, mNpoints);
 
     for(int i=0; i<mNpoints; i++)
     {
-        sum += mpP->Read(i) * Basis->GetL(i, x);
+        sum += mpP->Read(i) * p_basis->GetL(i, x);
     }
 
-    delete Basis;
+    delete p_basis;
     return sum;
 }
 
@@ -115,24 +115,17 @@ void BestL2Fit::Approximate(const int nxvalues)
 {
     double x;
     double p;
-    double h = (mXmax - mXmin)/(double)(nxvalues - 1);
+    double step_size = (mXmax - mXmin)/(double)(nxvalues - 1);
 
     // create file for saving data
     std::ofstream writeFile(mOutputFileName);
 
     for(int i = 0; i < nxvalues; i++)
     {
-        x = mXmin + i*h;
+        x = mXmin + i*step_size;
 
         // get the approximation pn(x)
         p = CalculatePolynomialApproximation(x);
-        //true_solution = (*mpFunction)(x);
-
-        // update inf-norm estimate
-        // if(fabs(true_solution - p) > inf_norm)
-        // {
-        //     inf_norm = fabs(true_solution - p);
-        // }
 
         // save estimate to file
         writeFile << x << " " << p << "\n";

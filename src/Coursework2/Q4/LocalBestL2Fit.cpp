@@ -25,7 +25,7 @@ LocalBestL2Fit::LocalBestL2Fit(double (*pFunction)(double),
     mOutputFileName = outputFileName;
     //mIsXPointsSet = false;
 
-    mpXpoints = new Matrix(mnintervals, mNpoints);
+    mpPolynomialCoefficients = new Matrix(mnintervals, mNpoints);
 
     // Calculate 
     Vector* pF = new Vector(mNpoints);
@@ -41,37 +41,18 @@ LocalBestL2Fit::LocalBestL2Fit(double (*pFunction)(double),
 
         for(int j=0; j<mNpoints; j++)
         {
-            (*mpXpoints)(i+1, j+1) = pP->Read(j);
+            (*mpPolynomialCoefficients)(i+1, j+1) = pP->Read(j);
         }
     }
 
     delete pF;
     delete pP;
     delete pA;
-
-    std::cout << *mpXpoints << std::endl;
-
-    //mpXpoints = new Vector(mNpoints);
-    //mpEvaluatedFunctionPoints = new Vector(mNpoints);
-
-    //UseUniformXPoints();
-
-    // // calculates f
-    // mpF = new Vector(mNpoints);
-    // CalculateFVector(); 
-
-    // // calculates A
-    // mpA = new Matrix(mNpoints, mNpoints);
-    // CalculateAMatrix();
-    
-    // // calculates p
-    // mpP = new Vector(mNpoints);
-    // GaussianElimination(mpA, mpP, mpF);
 }
 
 LocalBestL2Fit::~LocalBestL2Fit()
 {
-    delete mpXpoints;
+    delete mpPolynomialCoefficients;
 }
 
 void LocalBestL2Fit::CalculateFVector(Vector* pF, const int i)
@@ -146,15 +127,20 @@ void LocalBestL2Fit::GaussianElimination(Matrix* p_A, Vector* p_p, Vector* p_f)
 
 double LocalBestL2Fit::CalculatePolynomialApproximation(const double x)
 {
+    // Find the subinterval, k, in which x lies
+    int k = (int)(x - mXmin)/mIntervalWidth;
+    if(k==mnintervals){k -= 1;} // boundary correction
+
     double sum = 0.0;
-    Lagrange* Basis = new Lagrange(mXmin, mXmax, mNpoints);
+    Lagrange* p_basis = new Lagrange(mXmin + (double)k*mIntervalWidth, 
+        mXmin + (double)(k+1)*mIntervalWidth, mNpoints);
 
-    // for(int i=0; i<mNpoints; i++)
-    // {
-    //     sum += mpP->Read(i) * Basis->GetL(i, x);
-    // }
+    for(int i=0; i<mNpoints; i++)
+    {
+        sum += (*mpPolynomialCoefficients)(k+1, i+1) * p_basis->GetL(i, x);
+    }
 
-    delete Basis;
+    delete p_basis;
     return sum;
 }
 
@@ -173,13 +159,6 @@ void LocalBestL2Fit::Approximate(const int nxvalues)
 
         // get the approximation pn(x)
         p = CalculatePolynomialApproximation(x);
-        //true_solution = (*mpFunction)(x);
-
-        // update inf-norm estimate
-        // if(fabs(true_solution - p) > inf_norm)
-        // {
-        //     inf_norm = fabs(true_solution - p);
-        // }
 
         // save estimate to file
         writeFile << x << " " << p << "\n";
