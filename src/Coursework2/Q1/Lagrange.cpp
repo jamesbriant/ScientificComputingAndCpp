@@ -57,8 +57,8 @@ void Lagrange::PrintPolynomialDenominators() const
     std::cout << *mpPolynomialDenominators << std::endl;
 }
 
-double Lagrange::CalculateL(const int j, const double x) const
 // returns the jth lagrange polynomial evaluated at x
+double Lagrange::CalculateL(const int j, const double x) const
 {
     double product = 1.0;
 
@@ -73,6 +73,7 @@ double Lagrange::CalculateL(const int j, const double x) const
     return product/(*mpPolynomialDenominators)[j];
 }
 
+// evaluate the approximation at x
 double Lagrange::CalculateP(const double x) const
 {
     double p = 0.0;
@@ -87,6 +88,7 @@ double Lagrange::CalculateP(const double x) const
 
 void Lagrange::Approximate(const int nxvalues)
 {
+    // check if user defined Xpoints have been set
     if(mIsXPointsSet == false)
     {
         UseUniformXPoints();

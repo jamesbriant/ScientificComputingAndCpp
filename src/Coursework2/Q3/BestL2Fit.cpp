@@ -42,6 +42,7 @@ BestL2Fit::~BestL2Fit()
     delete mpF;
 }
 
+// Calculates the Best L2 norm F vector
 void BestL2Fit::CalculateFVector()
 {
     for(int k = 0; k < mNpoints; k++)
@@ -52,6 +53,7 @@ void BestL2Fit::CalculateFVector()
 
 }
 
+// Calculates the Best L2 norm A matrix
 void BestL2Fit::CalculateAMatrix()
 {
     for(int i = 0; i < mNpoints; i++)

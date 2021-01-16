@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
         new BestL2Fit(f1, p_gauss_f1_quartic, 0.0, 1.0, 5, "data/BestFitf1Quartic.dat");
     p_bestfit_f1_quartic->Approximate(101);
     Vector* p_bestfit_f1_quartic_data = new Vector(101);
-    ReadData("data/BestFitf1.dat", p_bestfit_f1_quartic_data);
+    ReadData("data/BestFitf1Quartic.dat", p_bestfit_f1_quartic_data);
 
     std::cout << std::endl << "f1 - Quartic approximation" << std::endl;
     std::cout << "maximum error: " << 

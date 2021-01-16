@@ -19,6 +19,7 @@ Gauss4Point::~Gauss4Point()
     delete mWeights;
 }
 
+// set the gauss-4-point xvalues
 void Gauss4Point::CalculateXValues()
 {
     mXvalues = new Vector(4);
@@ -31,6 +32,7 @@ void Gauss4Point::CalculateXValues()
     (*mXvalues)[3] = (mXmax - mXmin)*a/2.0 + (mXmax + mXmin)/2.0;
 }
 
+// set the gauss-4-point weights
 void Gauss4Point::CalculateWeights()
 {
     mWeights = new Vector(4);
@@ -40,16 +42,19 @@ void Gauss4Point::CalculateWeights()
     (*mWeights)[3] = mWeights->Read(0);
 }
 
+// implementation of Gauss-4-point rule
 double Gauss4Point::ApplyQuadratureRule(Vector* pEvaluatedPoints)
 {
     double sum = CalculateWeightedSum(mWeights, pEvaluatedPoints);
     return sum*(mXmax - mXmin)/2.0;
 }
 
+// returns Gauss-4-point approximation of integral of mpFunction
 double Gauss4Point::IntegrateFunction()
 {
     Vector* p_evaluated_points = new Vector(4);
 
+    // evauate the function at each X point
     for(int k = 0; k < length(*p_evaluated_points); k++)
     {
         (*p_evaluated_points)[k] = (*mpFunction)(mXvalues->Read(k));
@@ -61,10 +66,12 @@ double Gauss4Point::IntegrateFunction()
     return output;
 }
 
+// returns Gauss-4-point approximation of integral of mpFunction*L
 double Gauss4Point::IntegrateRHSProduct(const int i, int npoints, Vector* pPoints)
 {
     Vector* p_evaluated_points = new Vector(4);
 
+    // evauate the function at each X point
     for(int k = 0; k < length(*p_evaluated_points); k++)
     {
         (*p_evaluated_points)[k] = 
@@ -78,11 +85,13 @@ double Gauss4Point::IntegrateRHSProduct(const int i, int npoints, Vector* pPoint
     return output;
 }
 
+// returns Gauss-4-point approximation of integral of Li*Lj
 double Gauss4Point::IntegrateMatrixProduct(const int i, const int j, 
             int npoints, Vector* pPoints)
 {
     Vector* p_evaluated_points = new Vector(4);
 
+    // evauate the function at each X point
     for(int k = 0; k < length(*p_evaluated_points); k++)
     {
         (*p_evaluated_points)[k] = 

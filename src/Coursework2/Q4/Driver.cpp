@@ -105,7 +105,6 @@ int main(int argc, char* argv[])
     delete p_localbestfit_f4_linear5;
 
 
-
     std::cout << std::endl << "Question 4bii" << std::endl;
 
     LocalBestL2Fit* p_localbestfit_f1_linear2 = 

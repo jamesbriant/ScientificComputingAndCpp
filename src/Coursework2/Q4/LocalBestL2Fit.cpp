@@ -57,39 +57,43 @@ LocalBestL2Fit::~LocalBestL2Fit()
 
 void LocalBestL2Fit::CalculateFVector(Vector* pF, const int i)
 {
-    Vector* pLocalXpoints = new Vector(mNpoints);
+    Vector* p_local_X_points = new Vector(mNpoints);
     for(int k=0; k<mNpoints; k++)
     {
-        (*pLocalXpoints)[k] = i*mIntervalWidth + k*mMiniStepSize;
+        (*p_local_X_points)[k] = mXmin + i*mIntervalWidth + k*mMiniStepSize;
     }
+
+    mpIntegrator->SetIntervals(i, mnintervals);
 
     for(int k = 0; k < mNpoints; k++)
     {
         (*pF)[k] = 
-            mpIntegrator->IntegrateRHSProduct(k, mNpoints, pLocalXpoints);
+            mpIntegrator->IntegrateRHSProduct(k, mNpoints, p_local_X_points);
     }
 
-    delete pLocalXpoints;
+    delete p_local_X_points;
 }
 
 void LocalBestL2Fit::CalculateAMatrix(Matrix* pA, const int i)
 {
-    Vector* pLocalXpoints = new Vector(mNpoints);
+    Vector* p_local_X_points = new Vector(mNpoints);
     for(int k=0; k<mNpoints; k++)
     {
-        (*pLocalXpoints)[k] = i*mIntervalWidth + k*mMiniStepSize;
+        (*p_local_X_points)[k] = mXmin + i*mIntervalWidth + k*mMiniStepSize;
     }
+
+    mpIntegrator->SetIntervals(i, mnintervals);
 
     for(int i = 0; i < mNpoints; i++)
     {
         for(int j = 0; j < mNpoints; j++)
         {
             (*pA)(i+1, j+1) =
-                mpIntegrator->IntegrateMatrixProduct(i, j, mNpoints, pLocalXpoints);
+                mpIntegrator->IntegrateMatrixProduct(i, j, mNpoints, p_local_X_points);
         }
     }
 
-    delete pLocalXpoints;
+    delete p_local_X_points;
 }
 
 void LocalBestL2Fit::GaussianElimination(Matrix* p_A, Vector* p_p, Vector* p_f)
@@ -128,8 +132,9 @@ void LocalBestL2Fit::GaussianElimination(Matrix* p_A, Vector* p_p, Vector* p_f)
 double LocalBestL2Fit::CalculatePolynomialApproximation(const double x)
 {
     // Find the subinterval, k, in which x lies
-    int k = (int)(x - mXmin)/mIntervalWidth;
+    int k = (int)((x - mXmin)/mIntervalWidth);
     if(k==mnintervals){k -= 1;} // boundary correction
+    //std::cout << k << std::endl;
 
     double sum = 0.0;
     Lagrange* p_basis = new Lagrange(mXmin + (double)k*mIntervalWidth, 
@@ -148,14 +153,14 @@ void LocalBestL2Fit::Approximate(const int nxvalues)
 {
     double x;
     double p;
-    double h = (mXmax - mXmin)/(double)(nxvalues - 1);
+    double step_size = (mXmax - mXmin)/(double)(nxvalues - 1);
 
     // create file for saving data
     std::ofstream writeFile(mOutputFileName);
 
     for(int i = 0; i < nxvalues; i++)
     {
-        x = mXmin + i*h;
+        x = mXmin + i*step_size;
 
         // get the approximation pn(x)
         p = CalculatePolynomialApproximation(x);

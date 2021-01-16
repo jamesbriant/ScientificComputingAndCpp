@@ -14,7 +14,7 @@ class AbstractQuadratureRule
         Vector* mWeights;
 
         // each quadrature has different weights and Xvalues
-        virtual void CalculateXValues() = 0;
+        virtual void CalculateXValues(int intervalK, int nintervals) = 0;
         virtual void CalculateWeights() = 0;
 
         // an implementation of the quadrature rule
@@ -28,6 +28,7 @@ class AbstractQuadratureRule
             const int npoints, Vector* pPoints) const;
     
     public:
+        virtual void SetIntervals(int intervalK = 0, int nintervals = 1) = 0;
 
         virtual double IntegrateFunction() = 0;
         virtual double IntegrateRHSProduct(const int i, int npoints, 

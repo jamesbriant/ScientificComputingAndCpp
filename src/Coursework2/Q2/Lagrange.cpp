@@ -56,8 +56,8 @@ void Lagrange::PrintPolynomialDenominators() const
     std::cout << *mpPolynomialDenominators << std::endl;
 }
 
-double Lagrange::CalculateL(const int j, const double x) const
 // returns the jth lagrange polynomial evaluated at x
+double Lagrange::CalculateL(const int j, const double x) const
 {
     double product = 1.0;
 

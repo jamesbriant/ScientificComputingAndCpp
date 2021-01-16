@@ -19,8 +19,8 @@ void AbstractApproximator::UseUniformXPoints()
     mIsXPointsSet = true;
 }
 
+// Set user-defined xPoints
 void AbstractApproximator::SetXPoints(Vector* pXPoints)
-// Set non-uniform x-points
 {
     mpXpoints = pXPoints;
     mIsXPointsSet = true;

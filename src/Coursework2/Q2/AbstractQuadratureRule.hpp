@@ -28,7 +28,6 @@ class AbstractQuadratureRule
             const int npoints, Vector* pPoints) const;
     
     public:
-
         virtual double IntegrateFunction() = 0;
         virtual double IntegrateRHSProduct(const int i, int npoints, 
             Vector* pPoints) = 0;

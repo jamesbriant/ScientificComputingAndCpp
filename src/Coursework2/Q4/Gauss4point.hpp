@@ -10,7 +10,7 @@ class Gauss4Point : public AbstractQuadratureRule
         Gauss4Point();
 
     protected:
-        void CalculateXValues();
+        void CalculateXValues(int intervalK = 0, int nintervals = 1);
         void CalculateWeights();
 
         double ApplyQuadratureRule(Vector* pEvaluatedPoints);
@@ -23,6 +23,8 @@ class Gauss4Point : public AbstractQuadratureRule
         
         // overridden default destructor
         ~Gauss4Point();
+
+        void SetIntervals(int intervalK = 0, int nintervals = 1);
 
         double IntegrateFunction();
         double IntegrateRHSProduct(const int i, int npoints, Vector* pPoints);
